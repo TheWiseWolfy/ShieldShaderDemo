@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://cagdgf3n2wqkt"]
+
+[ext_resource type="Script" uid="uid://b071w5aw3hdka" path="res://GunScript.cs" id="1_272bh"]
+[ext_resource type="Script" uid="uid://dldp0mefb7a0g" path="res://SimplePlayer.cs" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://sagxw1phpgda" path="res://Camera.cs" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bdy4vnedjd0c5" path="res://projectile.tscn" id="2_5vw27"]
+[ext_resource type="Material" uid="uid://bc0jk73xmodi" path="res://shiel_material.tres" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://cjnakf01wedtf" path="res://ShaderController.cs" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://fa8rckif583h" path="res://ShieldScript.cs" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dt8g2nq8gmw16" path="res://cube.tscn" id="8_5vw27"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_vttxa"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vttxa"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_natsa"]
+radius = 3.0
+height = 6.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bo5yr"]
+radius = 3.1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vttxa"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
+albedo_color = Color(0.2585664, 0.2585664, 0.25856638, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vttxa"]
+material = SubResource("StandardMaterial3D_272bh")
+size = Vector2(200, 200)
+
+[sub_resource type="Environment" id="Environment_vttxa"]
+ambient_light_color = Color(0.86908793, 0.9317038, 0.96227103, 1)
+glow_enabled = true
+
+[node name="Node3D" type="Node3D" unique_id=1613035469]
+
+[node name="Gun" type="Node3D" parent="." unique_id=235733080]
+transform = Transform3D(-0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071068, -22.590408, 1.9584503, -15.859444)
+script = ExtResource("1_272bh")
+projectile = ExtResource("2_5vw27")
+interval = 2.0
+
+[node name="Player" type="RigidBody3D" parent="." unique_id=741528562 groups=["ignored"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.76632, 1.4747859, 18.064392)
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_ig7tw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=266388948]
+mesh = SubResource("CapsuleMesh_vttxa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1755526644]
+shape = SubResource("CapsuleShape3D_vttxa")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=413711399]
+transform = Transform3D(1, 0, 0, 0, 0.8824338, 0.4704367, 0, -0.4704367, 0.8824338, 9.536743e-07, 3.6165037, 5.849942)
+script = ExtResource("2_0xm2m")
+
+[node name="Shield" type="MeshInstance3D" parent="Player" unique_id=2145546619 node_paths=PackedStringArray("sphereMesh")]
+material_override = ExtResource("3_1bvp3")
+mesh = SubResource("SphereMesh_natsa")
+script = ExtResource("4_lquwl")
+sphereMesh = NodePath(".")
+shader = ExtResource("3_1bvp3")
+decayRate = 0.5
+
+[node name="ShieldArea3D" type="Area3D" parent="Player/Shield" unique_id=1662723652]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("5_lquwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Shield/ShieldArea3D" unique_id=2124023280]
+shape = SubResource("SphereShape3D_bo5yr")
+
+[node name="Floor" type="RigidBody3D" parent="." unique_id=1586239786 groups=["ignored"]]
+collision_mask = 5
+freeze = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=328555936]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_vttxa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=842170136]
+mesh = SubResource("PlaneMesh_vttxa")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1497114051]
+transform = Transform3D(1, 0, 0, 0, 0.1546329, 0.987972, 0, -0.987972, 0.1546329, 0, 5.218916, 0)
+
+[node name="Cube" parent="." unique_id=1379784652 instance=ExtResource("8_5vw27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.364726, 2, -22.214521)
+
+[node name="Cube3" parent="." unique_id=1824284195 instance=ExtResource("8_5vw27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.822573, 2.000001, 7.876999)
+
+[node name="Cube4" parent="." unique_id=609323064 instance=ExtResource("8_5vw27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5899925, 1.999999, -18.006111)
+
+[node name="Cube5" parent="." unique_id=867497417 instance=ExtResource("8_5vw27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.394816, 2, -2.82687)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1437889251]
+environment = SubResource("Environment_vttxa")
+
+[node name="Cube2" parent="." unique_id=1854998646 instance=ExtResource("8_5vw27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.077522, 1.2075062, 8.675838)

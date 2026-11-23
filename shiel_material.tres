@@ -1,0 +1,39 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bc0jk73xmodi"]
+
+[ext_resource type="Shader" uid="uid://ft3fipu16q1m" path="res://shiel_material.gdshader" id="1_py47b"]
+[ext_resource type="Texture2D" uid="uid://mnsdkysg0x37" path="res://hexagons_normal.png" id="2_16ahl"]
+[ext_resource type="Texture2D" uid="uid://b3v76p8re42y5" path="res://hexagons.png" id="2_qnf8k"]
+[ext_resource type="Texture2D" uid="uid://dpwsl1lykr82x" path="res://hexagons_colors.png" id="2_r7j5i"]
+[ext_resource type="Texture2D" uid="uid://c80u1kpxu2npo" path="res://hexagons_mask.png" id="5_natsa"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_16ahl"]
+frequency = 0.02
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qnf8k"]
+noise = SubResource("FastNoiseLite_16ahl")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_py47b")
+shader_parameter/depths = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/points = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/power = 30.0
+shader_parameter/shield_color = Color(0.10347258, 0.7642252, 0.6765211, 1)
+shader_parameter/influence_range = 2.035
+shader_parameter/cutoff_height = 3.01
+shader_parameter/fade_width = 0.5
+shader_parameter/hex_tiling = Vector2(5, 4)
+shader_parameter/uv_speed = Vector2(0.02, 0)
+shader_parameter/hex_tex = ExtResource("2_qnf8k")
+shader_parameter/hex_normal = ExtResource("2_16ahl")
+shader_parameter/cell_tex = ExtResource("2_r7j5i")
+shader_parameter/mask = ExtResource("5_natsa")
+shader_parameter/fresnel_shape = 0.2
+shader_parameter/rim_width = 0.2
+shader_parameter/rim_power = 1.0
+shader_parameter/normal_strength = 0.5
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_qnf8k")
+shader_parameter/noise_tiling = 1.0
+shader_parameter/wobble_speed = 2.0
+shader_parameter/wobble_amount = 0.1

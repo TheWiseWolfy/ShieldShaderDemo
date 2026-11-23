@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bdy4vnedjd0c5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_bo5yr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l18hh"]
+
+[node name="Projectile" type="RigidBody3D" unique_id=1470327545]
+collision_layer = 4
+collision_mask = 5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1609031482]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = SubResource("SphereMesh_bo5yr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1711991351]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_l18hh")
